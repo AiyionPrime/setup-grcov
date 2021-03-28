@@ -1,5 +1,9 @@
 name: Install grcov
 description: Installs grcov using the published release binaries
+author: Sierra Softworks
+branding:
+  icon: align-center
+  color: orange
 inputs:
   version:
     description: The version of grcov to install, or `latest` for the latest version.
