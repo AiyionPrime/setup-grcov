@@ -11,7 +11,11 @@ const sources = [
     sourceCargo
 ]
 
-const arch = `${os.platform()}-${os.arch()}`
+const archSuffix = {
+    "linux": "-gnu"
+}
+
+const arch = `${os.platform()}-${os.arch()}{archSuffix[os.arch()] || ''}`
 
 async function runAction() {
     const version = await resolveVersion(core.getInput("version", { required: false }) || "latest")
