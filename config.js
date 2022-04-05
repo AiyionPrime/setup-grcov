@@ -1,3 +1,4 @@
+const os = require('os')
 export const grcovRepo = {
     owner: "mozilla",
     repo: "grcov"
