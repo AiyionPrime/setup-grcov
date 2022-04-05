@@ -9,7 +9,7 @@ const config = require('./config')
  * @returns { boolean }
  */
 export function supported() {
-    return !!config.platformAssets[os.platform()] && (core.getInput("use-cargo") || "false") == "false"
+    return !!config.getArtifactAlias() && (core.getInput("use-cargo") || "false") == "false"
 }
 
 /**
@@ -23,7 +23,7 @@ export async function getVersion(version) {
     
     const assetName = config.platformAssets[os.platform()]
     if (!assetName) {
-        throw new Error(`mozilla/grcov does not support ${os.platform()}`)
+        throw new Error(`mozilla/grcov does not support ${os.platform()}-${os.arch()}`)
     }
 
     core.debug(`Fetching release information for mozilla/grcov@${version}`)
