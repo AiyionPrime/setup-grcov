@@ -21,7 +21,7 @@ export async function getVersion(version) {
     const githubToken = core.getInput("github-token", { required: true })
     const octokit = github.getOctokit(githubToken)
     
-    const assetName = config.platformAssets[os.platform()]
+    const assetName = config.getArtifactAlias()
     if (!assetName) {
         throw new Error(`mozilla/grcov does not support ${os.platform()}-${os.arch()}`)
     }

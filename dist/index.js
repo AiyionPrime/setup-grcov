@@ -9,8 +9,7 @@ require('./sourcemap-register.js');module.exports =
 __nccwpck_require__.r(__webpack_exports__);
 /* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
 /* harmony export */   "grcovRepo": () => /* binding */ grcovRepo,
-/* harmony export */   "getArtifactAlias": () => /* binding */ getArtifactAlias,
-/* harmony export */   "platformAssets": () => /* binding */ platformAssets
+/* harmony export */   "getArtifactAlias": () => /* binding */ getArtifactAlias
 /* harmony export */ });
 const os = __nccwpck_require__(2087)
 const grcovRepo = {
@@ -19,21 +18,16 @@ const grcovRepo = {
 }
 
 const artifactAlias = {
-    "linux-x64": "x86_64-unknown-linux-gnu",
-    "linux-arm64": "aarch64-unknown-linux-gnu",
-    "windows-x64": "x86_64-pc-windows-msvc",
-    "windows-arm64": "aarch64-pc-windows-msvc",
-    "darwin-x64": "x86_64-apple-darwin",
-    "darwin-arm64": "aarch64-apple-darwin"
+    "linux-x64": "grcov-x86_64-unknown-linux-gnu.tar.bz2",
+    "linux-arm64": "grcov-aarch64-unknown-linux-gnu.tar.bz2",
+    "windows-x64": "grcov-x86_64-pc-windows-msvc.zip",
+    "windows-arm64": "grcov-aarch64-pc-windows-msvc.zip",
+    "darwin-x64": "grcov-x86_64-apple-darwin.tar.bz2",
+    "darwin-arm64": "grcov-aarch64-apple-darwin.tar.bz2"
 }
 
 function getArtifactAlias() {
     return artifactAlias[`${os.platform()}-${os.arch()}`]
-}
-
-const platformAssets = {
-    'linux': "grcov-linux-x86_64.tar.bz2",
-    'darwin': 'grcov-osx-x86_64.tar.bz2'
 }
 
 /***/ }),
@@ -11909,7 +11903,7 @@ async function getVersion(version) {
     const githubToken = core.getInput("github-token", { required: true })
     const octokit = github.getOctokit(githubToken)
     
-    const assetName = config.platformAssets[os.platform()]
+    const assetName = config.getArtifactAlias()
     if (!assetName) {
         throw new Error(`mozilla/grcov does not support ${os.platform()}-${os.arch()}`)
     }

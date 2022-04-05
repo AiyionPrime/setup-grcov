@@ -5,19 +5,14 @@ export const grcovRepo = {
 }
 
 const artifactAlias = {
-    "linux-x64": "x86_64-unknown-linux-gnu",
-    "linux-arm64": "aarch64-unknown-linux-gnu",
-    "windows-x64": "x86_64-pc-windows-msvc",
-    "windows-arm64": "aarch64-pc-windows-msvc",
-    "darwin-x64": "x86_64-apple-darwin",
-    "darwin-arm64": "aarch64-apple-darwin"
+    "linux-x64": "grcov-x86_64-unknown-linux-gnu.tar.bz2",
+    "linux-arm64": "grcov-aarch64-unknown-linux-gnu.tar.bz2",
+    "windows-x64": "grcov-x86_64-pc-windows-msvc.zip",
+    "windows-arm64": "grcov-aarch64-pc-windows-msvc.zip",
+    "darwin-x64": "grcov-x86_64-apple-darwin.tar.bz2",
+    "darwin-arm64": "grcov-aarch64-apple-darwin.tar.bz2"
 }
 
 export function getArtifactAlias() {
     return artifactAlias[`${os.platform()}-${os.arch()}`]
-}
-
-export const platformAssets = {
-    'linux': "grcov-linux-x86_64.tar.bz2",
-    'darwin': 'grcov-osx-x86_64.tar.bz2'
 }
