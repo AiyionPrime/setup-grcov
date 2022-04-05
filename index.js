@@ -11,16 +11,25 @@ const sources = [
     sourceCargo
 ]
 
-const archSuffix = {
-    "linux": "-gnu"
+const artifactAlias = {
+    "linux-amd64": "x86_64-unknown-linux-gnu",
+    "linux-arm64": "aarch64-unknown-linux-gnu",
+    "windows-amd64": "x86_64-pc-windows-msvc",
+    "windows-arm64": "aarch64-pc-windows-msvc",
+    "darwin-amd64": "x86_64-apple-darwin",
+    "darwin-arm64": "aarch64-apple-darwin"
 }
 
-const arch = `${os.platform()}-${os.arch()}{archSuffix[os.arch()] || ''}`
+const artifact = artifactAlias[`${os.platform()}-${os.arch()}`]
+
+if (!artifact) {
+    throw new Error(`This action does not support your current platform (${os.platform()}) and architecture (${os.arch()}).`)
+}
 
 async function runAction() {
     const version = await resolveVersion(core.getInput("version", { required: false }) || "latest")
 
-    let cachedPath = toolcache.find("mozilla/grcov", version, arch)
+    let cachedPath = toolcache.find("mozilla/grcov", version, artifact)
     if (cachedPath) {
         core.addPath(cachedPath)
         core.info(`Using cached mozilla/grcov@${version}`)
@@ -35,7 +44,7 @@ async function runAction() {
     core.info(`Installing mozilla/grcov@${version}`)
     const installedPath = await source.getVersion(version)
 
-    cachedPath = await toolcache.cacheFile(installedPath, 'grcov', 'mozilla/grcov', version, arch)
+    cachedPath = await toolcache.cacheFile(installedPath, 'grcov', 'mozilla/grcov', version, artifact)
     core.addPath(cachedPath)
     core.info(`Installed mozilla/grcov@${version}`)
 }
